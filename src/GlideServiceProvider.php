@@ -1,4 +1,4 @@
-<?php namespace App\Systems\Glide;
+<?php namespace NZTim\Glide;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;

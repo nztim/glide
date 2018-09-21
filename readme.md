@@ -32,3 +32,4 @@
 ```
 <img src="{{ route('image.serve', ['type' => 'thumb']) }}">
 ```
+* Override `ImageController@handleError` to deal with errors as you see fit.

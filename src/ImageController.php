@@ -1,6 +1,7 @@
-<?php namespace App\Systems\Glide;
+<?php namespace NZTim\Glide;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
+use Throwable;
 
 abstract class ImageController extends Controller
 {
@@ -8,7 +9,11 @@ abstract class ImageController extends Controller
     {
         $image = new GlideImage($filename);
         $params = $this->params(request('type', ''));
-        return $server->getImageResponse($image, $params);
+        try {
+            return $server->getImageResponse($image, $params);
+        } catch (Throwable $e) {
+            return $this->handleError($e);
+        }
     }
 
     protected function params(string $type): array
@@ -19,4 +24,9 @@ abstract class ImageController extends Controller
     protected static $types = [
         // 'full' => ['w' => '1200', 'fit' => 'max'],
     ];
+
+    protected function handleError(Throwable $e)
+    {
+        return abort(404, 'Image not found');
+    }
 }
