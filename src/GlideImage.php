@@ -46,13 +46,11 @@ class GlideImage
     {
         if (!is_array($params)) {
             $elements = explode('.', $params);
-            if (count($elements) == 3) {
-                $params = [
-                    'w'   => $elements[0],
-                    'h'   => $elements[1],
-                    'fit' => $elements[2],
-                ];
-            }
+            $params = [
+                'w'   => $elements[0],
+                'h'   => $elements[1] ?? 'auto',
+                'fit' => $elements[2] ?? 'max',
+            ];
         }
         return route('image.serve', [$this->filename()] + $params);
     }
