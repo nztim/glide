@@ -46,7 +46,7 @@ class GlideImage
     {
         if (!is_array($params)) {
             $elements = explode('.', $params);
-            if (count($elements == 3)) {
+            if (count($elements) == 3) {
                 $params = [
                     'w'   => $elements[0],
                     'h'   => $elements[1],
