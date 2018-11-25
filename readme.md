@@ -35,3 +35,6 @@
 <img src="{{ route('image.serve', [$filename, 'w' => 500, 'h' => 'auto', 'fit' => 'max']) }}">
 ```
 
+### Upgrade
+
+* v2.0: Update all image URLs and parameter usage to new simplified format 
