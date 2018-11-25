@@ -24,12 +24,14 @@
 ],
 ```
 
-* Route named `image.serve`, extend supplied abstract controller `ImageController`
-* Update `protected static $types` in your controller for the image transformations you wish to allow
-    * E.g. `'thumb' => ['w' => '100', 'h' => '100', 'fit' => 'crop'],`
+* Add route named `image.serve`, extend supplied abstract controller `ImageController`
+* Override methods in ImageController as required to choose permitted parameters and handle errors
+* Use Laravel signed routes for protection from mass resize attacks
 * Then add the images to your views:
 
 ```
-<img src="{{ route('image.serve', ['type' => 'thumb']) }}">
+<img src="{{ $glideImage()->url('500.auto.max') }}">
+<img src="{{ $glideImage()->url(['w' => 500, 'h' => 'auto', 'fit' => 'max']) }}">
+<img src="{{ route('image.serve', [$filename, 'w' => 500, 'h' => 'auto', 'fit' => 'max']) }}">
 ```
-* Override `ImageController@handleError` to deal with errors as you see fit.
+

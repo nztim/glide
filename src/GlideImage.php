@@ -41,8 +41,19 @@ class GlideImage
         return $path;
     }
 
-    public function url(array $params = []): string
+    // Can pass actual params for Glide or w.h.f shorthand: 250.auto.fit
+    public function url($params = null): string
     {
+        if (!is_array($params)) {
+            $elements = explode('.', $params);
+            if (count($elements == 3)) {
+                $params = [
+                    'w'   => $elements[0],
+                    'h'   => $elements[1],
+                    'fit' => $elements[2],
+                ];
+            }
+        }
         return route('image.serve', [$this->filename()] + $params);
     }
 }

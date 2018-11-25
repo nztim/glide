@@ -8,7 +8,7 @@ abstract class ImageController extends Controller
     public function serve(GlideServer $server, $filename)
     {
         $image = new GlideImage($filename);
-        $params = $this->params(request('type', ''));
+        $params = $this->params(request()->all());
         try {
             return $server->getImageResponse($image, $params);
         } catch (Throwable $e) {
@@ -16,14 +16,12 @@ abstract class ImageController extends Controller
         }
     }
 
-    protected function params(string $type): array
+    // Override as required, or just return $params for all
+    protected function params(array $params): array
     {
-        return array_key_exists($type, static::$types) ? static::$types[$type] : [];
+        $permitted = ['w', 'h', 'fit'];
+        return array_intersect_key($params, array_flip($permitted));
     }
-
-    protected static $types = [
-        // 'full' => ['w' => '1200', 'fit' => 'max'],
-    ];
 
     protected function handleError(Throwable $e)
     {
