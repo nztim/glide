@@ -7,9 +7,9 @@ abstract class ImageController extends Controller
 {
     public function serve(GlideServer $server, $filename)
     {
-        $image = new GlideImage($filename);
-        $params = $this->params(request()->all());
         try {
+            $image = new GlideImage($filename);
+            $params = $this->params(request()->all());
             return $server->getImageResponse($image, $params);
         } catch (Throwable $e) {
             return $this->handleError($e);
