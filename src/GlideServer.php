@@ -1,22 +1,24 @@
 <?php namespace NZTim\Glide;
 
+use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use League\Glide\Server;
 
 class GlideServer
 {
-    protected $server;
+    private $storage;
+    private $server;
 
-    public function __construct(Server $server)
+    public function __construct(FilesystemManager $storage, Server $server)
     {
+        $this->storage = $storage;
         $this->server = $server;
     }
 
     public function storeImage(UploadedFile $file, GlideImage $image)
     {
-        if (!Storage::disk('glide_source')->exists($image->path(true))) {
-            Storage::disk('glide_source')->putFileAs($image->path(false), $file, $image->filename());
+        if (!$this->storage->disk('glide_source')->exists($image->path(true))) {
+            $this->storage->disk('glide_source')->putFileAs($image->path(false), $file, $image->filename());
         }
     }
 

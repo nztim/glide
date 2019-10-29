@@ -30,8 +30,8 @@
 * Then add the images to your views:
 
 ```
-<img src="{{ $glideImage()->url('500.auto.max') }}">
-<img src="{{ $glideImage()->url(['w' => 500, 'h' => 'auto', 'fit' => 'max']) }}">
+<img src="{{ $glideImage->url('500.auto.max') }}">
+<img src="{{ $glideImage->url(['w' => 500, 'h' => 'auto', 'fit' => 'max']) }}">
 <img src="{{ route('image.serve', [$filename, 'w' => 500, 'h' => 'auto', 'fit' => 'max']) }}">
 ```
 

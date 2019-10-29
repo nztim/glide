@@ -1,6 +1,6 @@
 <?php namespace NZTim\Glide;
 
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\ServiceProvider;
 use League\Glide\Responses\LaravelResponseFactory;
 use League\Glide\Server;
@@ -11,10 +11,11 @@ class GlideServiceProvider extends ServiceProvider
     public function register()
     {
         app()->bind(Server::class, function () {
+            $storage = app(FilesystemManager::class);
             return ServerFactory::create([
                 'response'       => new LaravelResponseFactory(app('request')),
-                'source'         => Storage::disk('glide_source')->getDriver(),
-                'cache'          => Storage::disk('glide_cache')->getDriver(),
+                'source'         => $storage->disk('glide_source')->getDriver(),
+                'cache'          => $storage->disk('glide_cache')->getDriver(),
                 'max_image_size' => 3000 * 2000,
             ]);
         });
