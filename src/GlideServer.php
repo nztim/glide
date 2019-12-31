@@ -22,6 +22,13 @@ class GlideServer
         }
     }
 
+    public function storeImageData(string $data, GlideImage $image)
+    {
+        if (!$this->storage->disk('glide_source')->exists($image->path())) {
+            $this->storage->disk('glide_source')->put($image->path(), $data);
+        }
+    }
+
     public function makeImage(GlideImage $image, array $params)
     {
         $this->server->makeImage($image->path(), $params);

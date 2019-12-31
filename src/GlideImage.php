@@ -11,6 +11,11 @@ class GlideImage
         return new GlideImage($hash . '.' . $extension);
     }
 
+    public static function newFromImageData(string $data, string $extension): GlideImage
+    {
+        return new GlideImage(md5($data) . '.' . $extension);
+    }
+
     protected $hash;
     protected $extension;
 
